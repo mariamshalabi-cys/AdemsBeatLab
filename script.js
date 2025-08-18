@@ -4,11 +4,10 @@ const car = {
     model: "Mustang GT",
     year: 2015,
     color: "Triple Yellow",
-    horsepower: "460 HP",
+    horsepower: "470 HP",
     nickname: "Peely"
 };
 
-// Function to display car info
 function displayCarInfo() {
     const carInfoDiv = document.getElementById('car-info');
     carInfoDiv.innerHTML = `
@@ -21,10 +20,13 @@ function displayCarInfo() {
     `;
 }
 
-// Object to hold Audio instances for sounds
+// Global variables for the beat sequencer
+const beatSequence = [];
 const sounds = {};
+let isPlaying = false;
+let currentStep = 0;
+let playbackInterval;
 
-// Load all sounds
 function loadSounds() {
     const soundButtons = document.querySelectorAll('.beat-button');
     soundButtons.forEach(button => {
@@ -36,7 +38,6 @@ function loadSounds() {
     });
 }
 
-// Function to play a sound
 function playSound(buttonId) {
     if (sounds[buttonId]) {
         sounds[buttonId].currentTime = 0;
@@ -44,45 +45,72 @@ function playSound(buttonId) {
     }
 }
 
-// Attach event listeners to beat pad buttons
-function setupBeatPad() {
+function addToSequence(buttonId) {
+    beatSequence.push(buttonId);
+    console.log("Current sequence:", beatSequence);
+    updateMessage(`Added sound to sequence. Sequence length: ${beatSequence.length}`);
+}
+
+function playSequence() {
+    if (isPlaying) {
+        clearInterval(playbackInterval);
+        isPlaying = false;
+        updateMessage("Beat stopped.");
+        return;
+    }
+
+    if (beatSequence.length === 0) {
+        updateMessage("Sequence is empty. Add some sounds first!");
+        return;
+    }
+
+    isPlaying = true;
+    currentStep = 0;
+    updateMessage("Playing beat...");
+
+    playbackInterval = setInterval(() => {
+        if (currentStep < beatSequence.length) {
+            const buttonId = beatSequence[currentStep];
+            playSound(buttonId);
+            currentStep++;
+        } else {
+            clearInterval(playbackInterval);
+            isPlaying = false;
+            updateMessage("Beat finished.");
+        }
+    }, 500);
+}
+
+function clearSequence() {
+    beatSequence.length = 0;
+    if (isPlaying) {
+        clearInterval(playbackInterval);
+        isPlaying = false;
+    }
+    updateMessage("Beat sequence cleared.");
+}
+
+function updateMessage(message) {
+    const messageArea = document.getElementById('message-area');
+    messageArea.textContent = message;
+}
+
+function setupAllListeners() {
     const beatPadDiv = document.getElementById('beat-pad');
     beatPadDiv.addEventListener('click', (event) => {
         const clickedButton = event.target.closest('.beat-button');
         if (clickedButton) {
             playSound(clickedButton.id);
-            handleSpecialInteractions(clickedButton.id);
+            addToSequence(clickedButton.id);
         }
     });
-}
 
-// --- Special Interactions Logic ---
-let buttonClickSequence = [];
-const secretSequence = ['cartiWhatBtn', 'engineRevBtn', 'secretMsgBtn'];
-
-function handleSpecialInteractions(buttonId) {
-    const messageArea = document.getElementById('message-area');
-    messageArea.textContent = '';
-
-    buttonClickSequence.push(buttonId);
-    if (buttonClickSequence.length > secretSequence.length) {
-        buttonClickSequence.shift();
-    }
-
-    if (JSON.stringify(buttonClickSequence) === JSON.stringify(secretSequence)) {
-        messageArea.textContent = "To my amazing man: You make my heart race faster than your Mustang. Happy Birthday, my love! ❤️";
-        buttonClickSequence = [];
-    }
-
-    if (buttonId === 'lighterBtn') {
-        setTimeout(() => {
-            messageArea.textContent = "💨 Time for some high-octane inspiration, eh? 😉";
-        }, 500);
-    }
+    document.getElementById('playBtn').addEventListener('click', playSequence);
+    document.getElementById('clearBtn').addEventListener('click', clearSequence);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     displayCarInfo();
     loadSounds();
-    setupBeatPad();
+    setupAllListeners();
 });
