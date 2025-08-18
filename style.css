@@ -7,17 +7,17 @@ body {
     background-color: #1a1a1a;
     color: #f0f0f0;
     margin: 0;
-    background-image: url('mustang_background.jpg'); /* Make sure to use the correct image file name */
+    background-image: url('mustang_background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .container {
-    background-color: rgba(30, 30, 30, 0.7); /* Transparent dark background */
+    background-color: rgba(30, 30, 30, 0.7);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(255, 255, 0, 0.5); /* Yellow glow */
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
     text-align: center;
     width: 90%;
     max-width: 800px;
@@ -33,7 +33,7 @@ h1 {
     padding: 20px;
     margin-bottom: 30px;
     border-radius: 8px;
-    background-color: rgba(255, 255, 0, 0.1); /* Transparent yellow background */
+    background-color: rgba(255, 255, 0, 0.1);
 }
 
 #car-info p {
