@@ -49,25 +49,25 @@ h1 {
 }
 
 .beat-button {
-    background-color: #555;
-    color: #fff;
+    /* New styles for the Mustang icon */
+    background-image: url('mustang_icon.png'); /* Change to your file name if different */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    color: #333; /* Dark text to stand out on a yellow icon */
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Text shadow for legibility */
     padding: 25px;
     border: none;
-    border-radius: 8px;
-    font-size: 1.2em;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    box-shadow: 0 4px #333;
-}
-
-.beat-button:hover {
-    background-color: #666;
+    transition: transform 0.1s;
+    box-shadow: none; /* Remove old shadow */
 }
 
 .beat-button:active {
-    background-color: #FFD700;
-    transform: translateY(2px);
-    box-shadow: 0 2px #333;
+    transform: scale(0.95);
 }
 
 #sequencer-container {
