@@ -1,116 +1,48 @@
-// Car Information
-const car = {
-    make: "Ford",
-    model: "Mustang GT",
-    year: 2015,
-    color: "Triple Yellow",
-    horsepower: "460 HP",
-    nickname: "Peely"
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Driver</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-function displayCarInfo() {
-    const carInfoDiv = document.getElementById('car-info');
-    carInfoDiv.innerHTML = `
-        <p><strong>Make:</strong> ${car.make}</p>
-        <p><strong>Model:</strong> ${car.model}</p>
-        <p><strong>Year:</strong> ${car.year}</p>
-        <p><strong>Color:</strong> ${car.color}</p>
-        <p><strong>Power:</strong> ${car.horsepower}</p>
-        <p><strong>My Favorite Ride:</strong> ${car.nickname}</p>
-    `;
-}
+    <div class="container">
+        <h1>Welcome to the GT Beat Lab</h1>
+        <div id="car-info">
+        </div>
 
-// Global variables for the beat sequencer
-const beatSequence = [];
-const sounds = {};
-let isPlaying = false;
-let currentStep = 0;
-let playbackInterval;
+        <div id="beat-pad">
+            <button class="beat-button" id="barbieBtn" data-sound="barbie.mp3">BARBIE</button>
+            <button class="beat-button" id="cartiHahahahBtn" data-sound="carti_hahahah.mp3">HAHAHAH</button>
+            <button class="beat-button" id="cartiSCHYEAHBtn" data-sound="carti_SCHYEAH.mp3">SCHYEAH</button>
+            <button class="beat-button" id="cartiWhatBtn" data-sound="carti_what.mp3">WHAT?!</button>
+            <button class="beat-button" id="clownHornBtn" data-sound="clown_horn.mp3">CLOWN</button>
+            <button class="beat-button" id="engineRevBtn" data-sound="engine_rev.mp3">VROOM</button>
+            <button class="beat-button" id="hihatClosedBtn" data-sound="hihat_closed.mp3">HI-HAT</button>
+            <button class="beat-button" id="hihatOpenBtn" data-sound="hihat_open.mp3">HI-HAT OPEN</button>
+            <button class="beat-button" id="kickBtn" data-sound="kick.mp3">KICK</button>
+            <button class="beat-button" id="lighterBtn" data-sound="lighter.mp3">FLICK</button>
+            <button class="beat-button" id="snareBtn" data-sound="snare.mp3">SNARE</button>
+            <button class="beat-button" id="synthChordBtn" data-sound="synth_chord.mp3">SYNTH</button>
+            <button class="beat-button" id="synthChord2Btn" data-sound="synth_chord.mp3-2.mp3">SYNTH 2</button>
+            <button class="beat-button" id="tireChirpBtn" data-sound="tire_chirp.mp3">CHIRP</button>
+        </div>
 
-function loadSounds() {
-    const soundButtons = document.querySelectorAll('.beat-button');
-    soundButtons.forEach(button => {
-        const soundFileName = button.dataset.sound;
-        if (soundFileName) {
-            sounds[button.id] = new Audio(`sounds/${soundFileName}`);
-            sounds[button.id].load();
-        }
-    });
-}
+        <div id="sequencer-container">
+            <div id="sequencer"></div>
+        </div>
 
-function playSound(buttonId) {
-    if (sounds[buttonId]) {
-        sounds[buttonId].currentTime = 0;
-        sounds[buttonId].play().catch(e => console.error("Error playing sound:", e));
-    }
-}
+        <div id="controls">
+            <button class="control-button" id="playBtn">Play Beat</button>
+            <button class="control-button" id="clearBtn">Clear Beat</button>
+        </div>
 
-function addToSequence(buttonId) {
-    beatSequence.push(buttonId);
-    console.log("Current sequence:", beatSequence);
-    updateMessage(`Added sound to sequence. Sequence length: ${beatSequence.length}`);
-}
+        <div id="message-area">
+        </div>
+    </div>
 
-function playSequence() {
-    if (isPlaying) {
-        clearInterval(playbackInterval);
-        isPlaying = false;
-        updateMessage("Beat stopped.");
-        return;
-    }
-
-    if (beatSequence.length === 0) {
-        updateMessage("Sequence is empty. Add some sounds first!");
-        return;
-    }
-
-    isPlaying = true;
-    currentStep = 0;
-    updateMessage("Playing beat...");
-
-    playbackInterval = setInterval(() => {
-        if (currentStep < beatSequence.length) {
-            const buttonId = beatSequence[currentStep];
-            playSound(buttonId);
-            currentStep++;
-        } else {
-            clearInterval(playbackInterval);
-            isPlaying = false;
-            updateMessage("Beat finished.");
-        }
-    }, 500);
-}
-
-function clearSequence() {
-    beatSequence.length = 0;
-    if (isPlaying) {
-        clearInterval(playbackInterval);
-        isPlaying = false;
-    }
-    updateMessage("Beat sequence cleared.");
-}
-
-function updateMessage(message) {
-    const messageArea = document.getElementById('message-area');
-    messageArea.textContent = message;
-}
-
-function setupAllListeners() {
-    const beatPadDiv = document.getElementById('beat-pad');
-    beatPadDiv.addEventListener('click', (event) => {
-        const clickedButton = event.target.closest('.beat-button');
-        if (clickedButton) {
-            playSound(clickedButton.id);
-            addToSequence(clickedButton.id);
-        }
-    });
-
-    document.getElementById('playBtn').addEventListener('click', playSequence);
-    document.getElementById('clearBtn').addEventListener('click', clearSequence);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    displayCarInfo();
-    loadSounds();
-    setupAllListeners();
-});
+    <script src="script.js"></script>
+</body>
+</html>
