@@ -119,7 +119,7 @@ function playSequence() {
                 cell.classList.remove('playing');
             });
         }
-    }, 500); // 500 milliseconds per step (2 steps per second)
+    }, 500);
 }
 
 function clearSequence() {
