@@ -50,15 +50,16 @@ h1 {
 
 .beat-button {
     /* New styles for the Mustang icon */
-    background-image: url('mustang_icon.png'); /* Change to your file name if different */
+    background-image: url('mustang_icon.png'); /* Make sure the file name is correct */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: transparent;
+    background-color: transparent; /* This makes the background see-through */
     color: #333; /* Dark text to stand out on a yellow icon */
     font-size: 1.2em;
     font-weight: bold;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Text shadow for legibility */
+    text-align: center; /* This centers the text */
     padding: 25px;
     border: none;
     cursor: pointer;
