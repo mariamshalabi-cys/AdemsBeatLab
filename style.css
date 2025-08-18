@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Chantelli+Antiqua&display=swap');
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -145,4 +147,38 @@ h1 {
     background-color: #007699;
 }
 
-.control-button:active
+.control-button:active {
+    background-color: #005f7a;
+    transform: translateY(2px);
+}
+
+#message-area {
+    margin-top: 10px;
+    font-size: 1.3em;
+    color: #00ff00;
+    min-height: 50px;
+}
+
+/* Styles for the mini beat pad */
+#mini-beat-pad {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.beat-button-mini {
+    width: 60px;
+    height: 60px;
+    background-color: #555;
+    color: white;
+    border: 1px solid #777;
+    border-radius: 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+}
