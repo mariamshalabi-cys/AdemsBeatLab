@@ -1,3 +1,4 @@
+// Car Information
 const car = {
     make: "Ford",
     model: "Mustang GT",
@@ -7,6 +8,7 @@ const car = {
     nickname: "Peely"
 };
 
+// Function to display car info
 function displayCarInfo() {
     const carInfoDiv = document.getElementById('car-info');
     carInfoDiv.innerHTML = `
@@ -19,6 +21,7 @@ function displayCarInfo() {
     `;
 }
 
+const sounds = {};
 const soundsToSequence = [
     { id: 'kickBtn', name: 'kick.mp3', label: 'Kick' },
     { id: 'snareBtn', name: 'snare.mp3', label: 'Snare' },
