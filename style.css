@@ -7,13 +7,17 @@ body {
     background-color: #1a1a1a;
     color: #f0f0f0;
     margin: 0;
+    background-image: url('mustang_background.jpg'); /* Make sure to use the correct image file name */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .container {
-    background-color: #333;
+    background-color: rgba(30, 30, 30, 0.7); /* Transparent dark background */
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.5); /* Yellow glow */
     text-align: center;
     width: 90%;
     max-width: 800px;
@@ -29,6 +33,7 @@ h1 {
     padding: 20px;
     margin-bottom: 30px;
     border-radius: 8px;
+    background-color: rgba(255, 255, 0, 0.1); /* Transparent yellow background */
 }
 
 #car-info p {
@@ -52,13 +57,87 @@ h1 {
     font-size: 1.2em;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
-    box-shadow: 0 4px #222;
+    box-shadow: 0 4px #333;
+}
+
+.beat-button:hover {
+    background-color: #666;
 }
 
 .beat-button:active {
     background-color: #FFD700;
     transform: translateY(2px);
-    box-shadow: 0 2px #222;
+    box-shadow: 0 2px #333;
+}
+
+#sequencer-container {
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#sequencer {
+    display: flex;
+    justify-content: flex-start;
+    border: 1px solid #FFD700;
+}
+
+.sequencer-row {
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+}
+
+.sequencer-label {
+    width: 60px;
+    text-align: right;
+    padding-right: 10px;
+    font-size: 0.9em;
+    color: #FFD700;
+}
+
+.sequencer-cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(255, 255, 0, 0.3);
+    cursor: pointer;
+    background-color: rgba(255, 255, 0, 0.05);
+    transition: background-color 0.1s;
+}
+
+.sequencer-cell.active {
+    background-color: #FFD700;
+}
+
+.sequencer-cell.playing {
+    border: 2px solid #fff;
+}
+
+#controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.control-button {
+    background-color: #008CBA;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.control-button:hover {
+    background-color: #007699;
+}
+
+.control-button:active {
+    background-color: #005f7a;
+    transform: translateY(2px);
 }
 
 #message-area {
