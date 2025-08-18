@@ -4,10 +4,11 @@ const car = {
     model: "Mustang GT",
     year: 2015,
     color: "Triple Yellow",
-    horsepower: "470 HP",
+    horsepower: "460 HP",
     nickname: "Peely"
 };
 
+// Function to display car info
 function displayCarInfo() {
     const carInfoDiv = document.getElementById('car-info');
     carInfoDiv.innerHTML = `
@@ -20,21 +21,28 @@ function displayCarInfo() {
     `;
 }
 
-// Global variables for the beat sequencer
-const beatSequence = [];
 const sounds = {};
+const soundsToSequence = [
+    { id: 'kickBtn', name: 'kick.mp3', label: 'Kick' },
+    { id: 'snareBtn', name: 'snare.mp3', label: 'Snare' },
+    { id: 'hihatClosedBtn', name: 'hihat_closed.mp3', label: 'Hi-Hat' },
+    { id: 'synthChordBtn', name: 'synth_chord.mp3', label: 'Synth' },
+    { id: 'cartiWhatBtn', name: 'carti_what.mp3', label: 'What' },
+    { id: 'engineRevBtn', name: 'engine_rev.mp3', label: 'Engine' },
+    { id: 'lighterBtn', name: 'lighter.mp3', label: 'Lighter' },
+    { id: 'sillySoundBtn', name: 'clown_horn.mp3', label: 'Joke' }
+];
+
+const NUM_STEPS = 8;
+const sequencerState = {};
 let isPlaying = false;
 let currentStep = 0;
 let playbackInterval;
 
 function loadSounds() {
-    const soundButtons = document.querySelectorAll('.beat-button');
-    soundButtons.forEach(button => {
-        const soundFileName = button.dataset.sound;
-        if (soundFileName) {
-            sounds[button.id] = new Audio(`sounds/${soundFileName}`);
-            sounds[button.id].load();
-        }
+    soundsToSequence.forEach(sound => {
+        sounds[sound.id] = new Audio(`sounds/${sound.name}`);
+        sounds[sound.id].load();
     });
 }
 
@@ -45,10 +53,34 @@ function playSound(buttonId) {
     }
 }
 
-function addToSequence(buttonId) {
-    beatSequence.push(buttonId);
-    console.log("Current sequence:", beatSequence);
-    updateMessage(`Added sound to sequence. Sequence length: ${beatSequence.length}`);
+function createSequencer() {
+    const sequencerDiv = document.getElementById('sequencer');
+
+    soundsToSequence.forEach(sound => {
+        const row = document.createElement('div');
+        row.className = 'sequencer-row';
+
+        const label = document.createElement('div');
+        label.className = 'sequencer-label';
+        label.textContent = sound.label;
+        row.appendChild(label);
+
+        sequencerState[sound.id] = [];
+        for (let i = 0; i < NUM_STEPS; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'sequencer-cell';
+            cell.dataset.soundId = sound.id;
+            cell.dataset.step = i;
+            cell.addEventListener('click', () => {
+                cell.classList.toggle('active');
+                sequencerState[sound.id][i] = cell.classList.contains('active');
+            });
+            row.appendChild(cell);
+            sequencerState[sound.id][i] = false;
+        }
+
+        sequencerDiv.appendChild(row);
+    });
 }
 
 function playSequence() {
@@ -59,30 +91,47 @@ function playSequence() {
         return;
     }
 
-    if (beatSequence.length === 0) {
-        updateMessage("Sequence is empty. Add some sounds first!");
-        return;
-    }
-
     isPlaying = true;
     currentStep = 0;
     updateMessage("Playing beat...");
 
     playbackInterval = setInterval(() => {
-        if (currentStep < beatSequence.length) {
-            const buttonId = beatSequence[currentStep];
-            playSound(buttonId);
+        if (currentStep < NUM_STEPS) {
+            soundsToSequence.forEach(sound => {
+                if (sequencerState[sound.id][currentStep]) {
+                    playSound(sound.id);
+                }
+            });
+
+            document.querySelectorAll('.sequencer-cell').forEach(cell => {
+                cell.classList.remove('playing');
+            });
+            document.querySelectorAll(`[data-step="${currentStep}"]`).forEach(cell => {
+                cell.classList.add('playing');
+            });
+
             currentStep++;
         } else {
             clearInterval(playbackInterval);
             isPlaying = false;
             updateMessage("Beat finished.");
+            document.querySelectorAll('.sequencer-cell').forEach(cell => {
+                cell.classList.remove('playing');
+            });
         }
-    }, 500);
+    }, 500); // 500 milliseconds per step (2 steps per second)
 }
 
 function clearSequence() {
-    beatSequence.length = 0;
+    document.querySelectorAll('.sequencer-cell').forEach(cell => {
+        cell.classList.remove('active');
+        cell.classList.remove('playing');
+    });
+    for (const soundId in sequencerState) {
+        for (let i = 0; i < NUM_STEPS; i++) {
+            sequencerState[soundId][i] = false;
+        }
+    }
     if (isPlaying) {
         clearInterval(playbackInterval);
         isPlaying = false;
@@ -96,15 +145,6 @@ function updateMessage(message) {
 }
 
 function setupAllListeners() {
-    const beatPadDiv = document.getElementById('beat-pad');
-    beatPadDiv.addEventListener('click', (event) => {
-        const clickedButton = event.target.closest('.beat-button');
-        if (clickedButton) {
-            playSound(clickedButton.id);
-            addToSequence(clickedButton.id);
-        }
-    });
-
     document.getElementById('playBtn').addEventListener('click', playSequence);
     document.getElementById('clearBtn').addEventListener('click', clearSequence);
 }
@@ -112,5 +152,6 @@ function setupAllListeners() {
 document.addEventListener('DOMContentLoaded', () => {
     displayCarInfo();
     loadSounds();
+    createSequencer();
     setupAllListeners();
 });
