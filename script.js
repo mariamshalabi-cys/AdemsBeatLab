@@ -2,10 +2,10 @@
 const car = {
     make: "Ford",
     model: "Mustang GT",
-    year: 2020,
-    color: "Yellow",
+    year: 2015,
+    color: "Triple Yellow",
     horsepower: "460 HP",
-    nickname: "The Golden Chariot"
+    nickname: "Peely"
 };
 
 // Function to display car info
