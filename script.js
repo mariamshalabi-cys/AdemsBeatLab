@@ -115,4 +115,43 @@ function playSequence() {
             clearInterval(playbackInterval);
             isPlaying = false;
             updateMessage("Beat finished.");
-            document.querySelectorAll('.sequ
+            document.querySelectorAll('.sequencer-cell').forEach(cell => {
+                cell.classList.remove('playing');
+            });
+        }
+    }, 500);
+}
+
+function clearSequence() {
+    document.querySelectorAll('.sequencer-cell').forEach(cell => {
+        cell.classList.remove('active');
+        cell.classList.remove('playing');
+    });
+    for (const soundId in sequencerState) {
+        for (let i = 0; i < NUM_STEPS; i++) {
+            sequencerState[soundId][i] = false;
+        }
+    }
+    if (isPlaying) {
+        clearInterval(playbackInterval);
+        isPlaying = false;
+    }
+    updateMessage("Beat sequence cleared.");
+}
+
+function updateMessage(message) {
+    const messageArea = document.getElementById('message-area');
+    messageArea.textContent = message;
+}
+
+function setupAllListeners() {
+    document.getElementById('playBtn').addEventListener('click', playSequence);
+    document.getElementById('clearBtn').addEventListener('click', clearSequence);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayCarInfo();
+    loadSounds();
+    createSequencer();
+    setupAllListeners();
+});
