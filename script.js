@@ -1,160 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM ELEMENT SELECTORS ---
-    const padModeBtn = document.getElementById('pad-mode-btn');
-    const sequencerModeBtn = document.getElementById('sequencer-mode-btn');
-    const padModeContainer = document.querySelector('.pad-mode-controls');
-    const sequencerContainer = document.querySelector('.sequencer-container');
-
-    // ==================================================================
-    // PAD MODE LOGIC & STATE
-    // ==================================================================
-    const padSoundKits = {
+    const soundKits = {
         'Drums': {
             pad1: 'sounds/kick.mp3',
             pad2: 'sounds/snare.mps.mp3',
-            // ... etc
+            pad3: 'sounds/hihat_closed.mp3',
+            pad4: 'sounds/hihat_open.mp3',
+            // Remember to fill in the rest and double-check paths!
         },
         'Bass': {
-            // ... etc
+            pad1: 'sounds/synth_chord.mp3-2.mp3',
+            // Fill in bass sounds
         },
         'Synth': {
-            // ... etc
+            pad1: 'sounds/synth_chord.mp3',
+            // Fill in synth sounds
         },
         'FX': {
             pad1: 'sounds/carti_SCHYEAH.mp3',
-            // ... etc
+            pad2: 'sounds/carti_hahahah.mp3',
+            pad3: 'sounds/carti_what.mp3',
+            pad4: 'sounds/barbie.mp3',
         }
     };
+
     const pads = document.querySelectorAll('.pad');
     const kitButtons = document.querySelectorAll('.kit-button');
     let currentKit = 'Drums';
 
-    function playPadSound(soundPath) {
-        if (!soundPath) return;
+    function playSound(soundPath) {
+        if (!soundPath) {
+            console.log("Empty pad clicked.");
+            return;
+        }
         const audio = new Audio(soundPath);
         audio.play();
     }
     
     function loadKit(kitName) {
         currentKit = kitName;
-        const kit = padSoundKits[kitName] || {};
+        const kit = soundKits[kitName] || {};
         pads.forEach((pad) => {
             const padNumber = pad.dataset.pad;
             const sound = kit[`pad${padNumber}`];
             pad.dataset.sound = sound || '';
         });
+
         kitButtons.forEach(button => {
             button.classList.toggle('active', button.dataset.kit === kitName);
         });
     }
 
     kitButtons.forEach(button => {
-        button.addEventListener('click', () => loadKit(button.dataset.kit));
+        button.addEventListener('click', () => {
+            const kit = button.dataset.kit;
+            loadKit(kit);
+        });
     });
 
     pads.forEach(pad => {
         pad.addEventListener('click', () => {
             if (pad.dataset.sound) {
-                playPadSound(pad.dataset.sound);
+                playSound(pad.dataset.sound);
                 pad.classList.add('playing');
-                setTimeout(() => pad.classList.remove('playing'), 150);
+                setTimeout(() => {
+                    pad.classList.remove('playing');
+                }, 150);
             }
         });
     });
 
-    // ==================================================================
-    // SEQUENCER MODE LOGIC & STATE
-    // ==================================================================
-    const NUM_STEPS = 16;
-    const instruments = [
-        { name: 'Kick', soundPath: 'sounds/kick.mp3' },
-        { name: 'Snare', soundPath: 'sounds/snare.mps.mp3' },
-        { name: 'Hi-Hat', soundPath: 'sounds/hihat_closed.mp3' },
-        { name: 'Open-Hat', soundPath: 'sounds/hihat_open.mp3' }
-    ];
-    const sequencerGrid = document.querySelector('.sequencer');
-    const playStopButton = document.querySelector('#play-stop-button');
-    let sequenceData, isPlaying = false, currentStep = 0, tempo = 120, intervalId = null;
-
-    function createGrid() {
-        sequenceData = instruments.map(() => Array(NUM_STEPS).fill(false));
-        sequencerGrid.innerHTML = '';
-        instruments.forEach((instrument, rowIndex) => {
-            const row = document.createElement('div');
-            row.classList.add('instrument-row');
-            for (let stepIndex = 0; stepIndex < NUM_STEPS; stepIndex++) {
-                const step = document.createElement('div');
-                step.classList.add('step');
-                step.dataset.row = rowIndex;
-                step.dataset.step = stepIndex;
-                row.appendChild(step);
-            }
-            sequencerGrid.appendChild(row);
-        });
-    }
-
-    function toggleStep(e) {
-        if (!e.target.classList.contains('step')) return;
-        const row = e.target.dataset.row;
-        const step = e.target.dataset.step;
-        sequenceData[row][step] = !sequenceData[row][step];
-        e.target.classList.toggle('active', sequenceData[row][step]);
-    }
-
-    function playLoop() {
-        const intervalTime = 60000 / tempo / 4;
-        intervalId = setInterval(() => {
-            instruments.forEach((instrument, rowIndex) => {
-                if (sequenceData[rowIndex][currentStep]) {
-                    const audio = new Audio(instrument.soundPath);
-                    audio.play();
-                }
-            });
-            const lastStep = (currentStep - 1 + NUM_STEPS) % NUM_STEPS;
-            document.querySelectorAll(`[data-step="${lastStep}"]`).forEach(el => el.classList.remove('playing'));
-            document.querySelectorAll(`[data-step="${currentStep}"]`).forEach(el => el.classList.add('playing'));
-            currentStep = (currentStep + 1) % NUM_STEPS;
-        }, intervalTime);
-    }
-
-    function togglePlayback() {
-        isPlaying = !isPlaying;
-        if (isPlaying) {
-            currentStep = 0;
-            playLoop();
-            playStopButton.textContent = 'Stop';
-        } else {
-            clearInterval(intervalId);
-            playStopButton.textContent = 'Play';
-            document.querySelectorAll('.step.playing').forEach(el => el.classList.remove('playing'));
-        }
-    }
-
-    playStopButton.addEventListener('click', togglePlayback);
-    sequencerGrid.addEventListener('click', toggleStep);
-
-    // ==================================================================
-    // MODE SWITCHING LOGIC
-    // ==================================================================
-    function setMode(mode) {
-        if (mode === 'pad') {
-            padModeContainer.classList.remove('hidden');
-            sequencerContainer.classList.add('hidden');
-            padModeBtn.classList.add('active');
-            sequencerModeBtn.classList.remove('active');
-        } else {
-            padModeContainer.classList.add('hidden');
-            sequencerContainer.classList.remove('hidden');
-            padModeBtn.classList.remove('active');
-            sequencerModeBtn.classList.add('active');
-        }
-    }
-
-    padModeBtn.addEventListener('click', () => setMode('pad'));
-    sequencerModeBtn.addEventListener('click', () => setMode('sequencer'));
-
-    // --- INITIALIZATION ---
     loadKit(currentKit);
-    createGrid();
-    setMode('pad'); // Start in Pad Mode by default
 });
