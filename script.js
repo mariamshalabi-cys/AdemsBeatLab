@@ -1,78 +1,152 @@
-console.log("--- SCRIPT START ---");
-
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("--- DOMContentLoaded event fired. Script is now running. ---");
-
     // --- DOM ELEMENT SELECTORS ---
-    console.log("Querying for DOM elements...");
     const padModeBtn = document.getElementById('pad-mode-btn');
-    console.log("padModeBtn:", padModeBtn);
-    
     const sequencerModeBtn = document.getElementById('sequencer-mode-btn');
-    console.log("sequencerModeBtn:", sequencerModeBtn);
+    const padModeContainer = document.querySelector('.pad-mode-controls');
+    const sequencerContainer = document.querySelector('.sequencer-container');
 
-    const padModeContainer = document.getElementById('pad-mode-container');
-    console.log("padModeContainer:", padModeContainer);
+    // ==================================================================
+    // PAD MODE LOGIC & STATE
+    // ==================================================================
+    const padSoundKits = {
+        'Drums': {
+            pad1: 'sounds/kick.mp3',
+            pad2: 'sounds/snare.mps.mp3',
+            // ... etc
+        },
+        'Bass': {
+            // ... etc
+        },
+        'Synth': {
+            // ... etc
+        },
+        'FX': {
+            pad1: 'sounds/carti_SCHYEAH.mp3',
+            // ... etc
+        }
+    };
+    const pads = document.querySelectorAll('.pad');
+    const kitButtons = document.querySelectorAll('.kit-button');
+    let currentKit = 'Drums';
 
-    const sequencerContainer = document.getElementById('sequencer-mode-container');
-    console.log("sequencerContainer:", sequencerContainer);
+    function playPadSound(soundPath) {
+        if (!soundPath) return;
+        const audio = new Audio(soundPath);
+        audio.play();
+    }
+    
+    function loadKit(kitName) {
+        currentKit = kitName;
+        const kit = padSoundKits[kitName] || {};
+        pads.forEach((pad) => {
+            const padNumber = pad.dataset.pad;
+            const sound = kit[`pad${padNumber}`];
+            pad.dataset.sound = sound || '';
+        });
+        kitButtons.forEach(button => {
+            button.classList.toggle('active', button.dataset.kit === kitName);
+        });
+    }
 
+    kitButtons.forEach(button => {
+        button.addEventListener('click', () => loadKit(button.dataset.kit));
+    });
+
+    pads.forEach(pad => {
+        pad.addEventListener('click', () => {
+            if (pad.dataset.sound) {
+                playPadSound(pad.dataset.sound);
+                pad.classList.add('playing');
+                setTimeout(() => pad.classList.remove('playing'), 150);
+            }
+        });
+    });
+
+    // ==================================================================
+    // SEQUENCER MODE LOGIC & STATE
+    // ==================================================================
+    const NUM_STEPS = 16;
+    const instruments = [
+        { name: 'Kick', soundPath: 'sounds/kick.mp3' },
+        { name: 'Snare', soundPath: 'sounds/snare.mps.mp3' },
+        { name: 'Hi-Hat', soundPath: 'sounds/hihat_closed.mp3' },
+        { name: 'Open-Hat', soundPath: 'sounds/hihat_open.mp3' }
+    ];
     const sequencerGrid = document.querySelector('.sequencer');
-    console.log("sequencerGrid:", sequencerGrid);
-
     const playStopButton = document.querySelector('#play-stop-button');
-    console.log("playStopButton:", playStopButton);
-
-
-    // --- SEQUENCER MODE LOGIC ---
-    let isGridCreated = false;
+    let sequenceData, isPlaying = false, currentStep = 0, tempo = 120, intervalId = null;
 
     function createGrid() {
-        console.log("--- createGrid() function CALLED. ---");
-
-        if (isGridCreated) {
-            console.log("Grid already created. Exiting function.");
-            return;
-        }
-
-        if (!sequencerGrid) {
-            console.error("CRITICAL ERROR: The 'sequencerGrid' element is null. Cannot build the grid.");
-            return;
-        }
-
-        console.log("Attempting to clear and build the grid now...");
-        sequencerGrid.innerHTML = ''; // Clear it first
-        for (let i = 0; i < 4; i++) { // Simplified to 4 rows for testing
+        sequenceData = instruments.map(() => Array(NUM_STEPS).fill(false));
+        sequencerGrid.innerHTML = '';
+        instruments.forEach((instrument, rowIndex) => {
             const row = document.createElement('div');
             row.classList.add('instrument-row');
-            for (let j = 0; j < 16; j++) {
+            for (let stepIndex = 0; stepIndex < NUM_STEPS; stepIndex++) {
                 const step = document.createElement('div');
                 step.classList.add('step');
+                step.dataset.row = rowIndex;
+                step.dataset.step = stepIndex;
                 row.appendChild(step);
             }
             sequencerGrid.appendChild(row);
-        }
-        isGridCreated = true;
-        console.log("--- Grid creation FINISHED. You should see it now. ---");
+        });
     }
 
-    // --- MODE SWITCHING LOGIC ---
+    function toggleStep(e) {
+        if (!e.target.classList.contains('step')) return;
+        const row = e.target.dataset.row;
+        const step = e.target.dataset.step;
+        sequenceData[row][step] = !sequenceData[row][step];
+        e.target.classList.toggle('active', sequenceData[row][step]);
+    }
+
+    function playLoop() {
+        const intervalTime = 60000 / tempo / 4;
+        intervalId = setInterval(() => {
+            instruments.forEach((instrument, rowIndex) => {
+                if (sequenceData[rowIndex][currentStep]) {
+                    const audio = new Audio(instrument.soundPath);
+                    audio.play();
+                }
+            });
+            const lastStep = (currentStep - 1 + NUM_STEPS) % NUM_STEPS;
+            document.querySelectorAll(`[data-step="${lastStep}"]`).forEach(el => el.classList.remove('playing'));
+            document.querySelectorAll(`[data-step="${currentStep}"]`).forEach(el => el.classList.add('playing'));
+            currentStep = (currentStep + 1) % NUM_STEPS;
+        }, intervalTime);
+    }
+
+    function togglePlayback() {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+            currentStep = 0;
+            playLoop();
+            playStopButton.textContent = 'Stop';
+        } else {
+            clearInterval(intervalId);
+            playStopButton.textContent = 'Play';
+            document.querySelectorAll('.step.playing').forEach(el => el.classList.remove('playing'));
+        }
+    }
+
+    playStopButton.addEventListener('click', togglePlayback);
+    sequencerGrid.addEventListener('click', toggleStep);
+
+    // ==================================================================
+    // MODE SWITCHING LOGIC
+    // ==================================================================
     function setMode(mode) {
-        console.log(`--- setMode() function CALLED with mode: '${mode}' ---`);
         if (mode === 'pad') {
             padModeContainer.classList.remove('hidden');
             sequencerContainer.classList.add('hidden');
             padModeBtn.classList.add('active');
             sequencerModeBtn.classList.remove('active');
-            console.log("Switched to Pad Mode.");
-        } else { // Sequencer mode
-            console.log("Attempting to switch to Sequencer Mode.");
-            createGrid(); 
+        } else {
             padModeContainer.classList.add('hidden');
             sequencerContainer.classList.remove('hidden');
             padModeBtn.classList.remove('active');
             sequencerModeBtn.classList.add('active');
-            console.log("Switched to Sequencer Mode.");
         }
     }
 
@@ -80,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sequencerModeBtn.addEventListener('click', () => setMode('sequencer'));
 
     // --- INITIALIZATION ---
-    console.log("--- Initializing page state... ---");
-    setMode('pad');
-    console.log("--- Page Initialized. ---");
+    loadKit(currentKit);
+    createGrid();
+    setMode('pad'); // Start in Pad Mode by default
 });
