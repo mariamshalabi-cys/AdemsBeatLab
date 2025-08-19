@@ -152,3 +152,29 @@ h1 {
     color: #00ff00;
     min-height: 50px;
 }
+#controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.control-button {
+    background-color: #008CBA;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.control-button:hover {
+    background-color: #007699;
+}
+
+.control-button:active {
+    background-color: #005f7a;
+    transform: translateY(2px);
+}
