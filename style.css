@@ -26,9 +26,37 @@ body {
 .main-title {
     font-family: 'Lora', serif;
     font-size: 2.5rem;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-align: center;
     text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+}
+
+.mode-switcher {
+    display: flex;
+    background-color: var(--pad-bg);
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 30px;
+}
+
+.mode-btn {
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.mode-btn.active {
+    background-color: var(--primary-yellow);
+    color: #121212;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .kit-selector {
@@ -54,14 +82,8 @@ body {
     width: 120px;
 }
 
-.kit-button img {
-    height: 30px;
-}
-
-.kit-button:hover {
-    border-color: var(--primary-yellow);
-}
-
+.kit-button img { height: 30px; }
+.kit-button:hover { border-color: var(--primary-yellow); }
 .kit-button.active {
     background-color: var(--primary-yellow);
     color: #121212;
@@ -98,14 +120,51 @@ body {
     border-color: var(--primary-yellow);
 }
 
+.transport-controls { margin-bottom: 20px; }
+#play-stop-button {
+    background-color: var(--primary-yellow);
+    color: #121212;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+#play-stop-button:hover { filter: brightness(1.1); }
+
+.sequencer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.instrument-row {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    gap: 5px;
+}
+
+.step {
+    aspect-ratio: 1 / 1;
+    background-color: var(--pad-bg);
+    border-radius: 4px;
+    transition: all 0.1s ease;
+    cursor: pointer;
+}
+
+.step.active { background-color: var(--primary-yellow); }
+.step.playing {
+    filter: brightness(1.5);
+    transform: scale(1.05);
+}
+
 @keyframes breathing-glow {
-    0% {
-        box-shadow: 0 0 10px rgba(250, 204, 21, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 20px rgba(250, 204, 21, 0.7);
-    }
-    100% {
-        box-shadow: 0 0 10px rgba(250, 204, 21, 0.3);
-    }
+    0% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(250, 204, 21, 0.7); }
+    100% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
 }
