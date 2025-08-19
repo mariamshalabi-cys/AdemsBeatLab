@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Chantelli+Antiqua&display=swap');
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -29,9 +31,10 @@ body {
 }
 
 h1 {
+    font-family: 'Chantelli Antiqua', cursive;
     color: #FFD700;
     margin: 10px 0;
-    font-size: 2em;
+    font-size: 2.5em;
 }
 
 #car-info {
@@ -40,11 +43,12 @@ h1 {
     margin-bottom: 15px;
     border-radius: 8px;
     background-color: rgba(255, 255, 0, 0.1);
+    font-family: 'Chantelli Antiqua', cursive;
 }
 
 #car-info p {
     margin: 5px 0;
-    font-size: 1em;
+    font-size: 1.1em;
 }
 
 #beat-pad {
@@ -56,20 +60,22 @@ h1 {
 
 .beat-button {
     background-image: url('mustang_icon.png');
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-color: transparent;
-    color: black;
+    color: #FFD700;
+    font-family: 'Chantelli Antiqua', cursive;
     font-size: 1.2em;
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     text-align: center;
-    padding: 15px;
+    padding: 25px;
     border: none;
     cursor: pointer;
     transition: transform 0.1s;
     box-shadow: none;
+    height: 120px;
 }
 
 .beat-button:active {
@@ -151,30 +157,4 @@ h1 {
     font-size: 1.3em;
     color: #00ff00;
     min-height: 50px;
-}
-#controls {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.control-button {
-    background-color: #008CBA;
-    color: #fff;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-}
-
-.control-button:hover {
-    background-color: #007699;
-}
-
-.control-button:active {
-    background-color: #005f7a;
-    transform: translateY(2px);
 }
