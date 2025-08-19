@@ -1,48 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Favorite Driver</title>
-    <link rel="stylesheet" href="style.css">
-</head>
 <body>
+    <h1 class="main-title">Adem's Beat Lab</h1>
 
-    <div class="container">
-        <h1>Welcome to the GT Beat Lab</h1>
-        <div id="car-info">
-        </div>
-
-        <div id="beat-pad">
-            <button class="beat-button" id="barbieBtn" data-sound="barbie.mp3">BARBIE</button>
-            <button class="beat-button" id="cartiHahahahBtn" data-sound="carti_hahahah.mp3">HAHAHAH</button>
-            <button class="beat-button" id="cartiSCHYEAHBtn" data-sound="carti_SCHYEAH.mp3">SCHYEAH</button>
-            <button class="beat-button" id="cartiWhatBtn" data-sound="carti_what.mp3">WHAT?!</button>
-            <button class="beat-button" id="clownHornBtn" data-sound="clown_horn.mp3">CLOWN</button>
-            <button class="beat-button" id="engineRevBtn" data-sound="engine_rev.mp3">VROOM</button>
-            <button class="beat-button" id="hihatClosedBtn" data-sound="hihat_closed.mp3">HI-HAT</button>
-            <button class="beat-button" id="hihatOpenBtn" data-sound="hihat_open.mp3">HI-HAT OPEN</button>
-            <button class="beat-button" id="kickBtn" data-sound="kick.mp3">KICK</button>
-            <button class="beat-button" id="lighterBtn" data-sound="lighter.mp3">FLICK</button>
-            <button class="beat-button" id="snareBtn" data-sound="snare.mp3">SNARE</button>
-            <button class="beat-button" id="synthChordBtn" data-sound="synth_chord.mp3">SYNTH</button>
-            <button class="beat-button" id="synthChord2Btn" data-sound="synth_chord.mp3-2.mp3">SYNTH 2</button>
-            <button class="beat-button" id="tireChirpBtn" data-sound="tire_chirp.mp3">CHIRP</button>
-        </div>
-
-        <div id="sequencer-container">
-            <div id="sequencer"></div>
-        </div>
-
-        <div id="controls">
-            <button class="control-button" id="playBtn">Play Beat</button>
-            <button class="control-button" id="clearBtn">Clear Beat</button>
-        </div>
-
-        <div id="message-area">
-        </div>
+    <div class="kit-selector">
+        <button class="kit-button active" data-kit="Drums">
+            <img src="path/to/your/mustang-icon.png" alt="Drums Icon">
+            <span>Drums</span>
+        </button>
+        <button class="kit-button" data-kit="Bass">
+            <img src="path/to/your/mustang-icon.png" alt="Bass Icon">
+            <span>Bass</span>
+        </button>
+        <button class="kit-button" data-kit="Synth">
+            <img src="path/to/your/mustang-icon.png" alt="Synth Icon">
+            <span>Synth</span>
+        </button>
+        <button class="kit-button" data-kit="FX">
+            <img src="path/to/your/mustang-icon.png" alt="FX Icon">
+            <span>FX</span>
+        </button>
     </div>
 
+    <div class="beat-pad">
+        <div class="pad" data-pad="1"></div>
+        <div class="pad" data-pad="2"></div>
+        </div>
+    
     <script src="script.js"></script>
 </body>
-</html>
