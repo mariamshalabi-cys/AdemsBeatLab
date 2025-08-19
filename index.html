@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Favorite Driver</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.58/build/Tone.min.js"></script>
 </head>
 <body>
+
+    <div id="mini-beat-pad">
+        <button class="beat-button-mini" id="kickBtnMini">KICK</button>
+        <button class="beat-button-mini" id="snareBtnMini">SNARE</button>
+        <button class="beat-button-mini" id="hihatClosedBtnMini">HI-HAT</button>
+        <button class="beat-button-mini" id="synthBtnMini">SYNTH</sbutton>
+    </div>
 
     <div class="container">
         <h1>Welcome to the GT Beat Lab</h1>
@@ -33,20 +41,20 @@
         <div id="sequencer-container">
             <div id="sequencer"></div>
         </div>
-
+        <div id="car-info">
+        </div>
         <div id="controls">
             <button class="control-button" id="playBtn">Play Beat</button>
             <button class="control-button" id="clearBtn">Clear Beat</button>
         </div>
 
         <div id="message-area">
+            <label for="bpm-slider">Tempo (BPM):</label>
+            <input type="range" id="bpm-slider" min="60" max="240" value="120" step="1">
+            <span id="bpm-value">120</span>
         </div>
     </div>
-<div id="controls">
-    <label for="bpm-slider">Tempo (BPM):</label>
-    <input type="range" id="bpm-slider" min="60" max="240" value="120" step="1">
-    <span id="bpm-value">120</span>
-</div>
+
     <script src="script.js"></script>
 </body>
 </html>
