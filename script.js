@@ -1,57 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- SOUND KITS DATA ---
     const soundKits = {
         'Drums': {
             pad1: 'sounds/drums/kick.wav',
             pad2: 'sounds/drums/snare.wav',
-            // ... etc for 16 pads
+            pad3: 'sounds/drums/hihat.wav',
+            pad4: 'sounds/drums/openhat.wav',
+            // Fill in the rest of your sound paths
         },
         'Bass': {
             pad1: 'sounds/bass/bass_a.wav',
-            // ... etc
+            // Fill in the rest of your sound paths
         },
         'Synth': {
             pad1: 'sounds/synth/synth_c.wav',
-            // ... etc
+            // Fill in the rest of your sound paths
         },
         'FX': {
             pad1: 'sounds/fx/riser.wav',
-            // ... etc
+            // Fill in the rest of your sound paths
         }
     };
 
-    // --- VARIABLES ---
     const pads = document.querySelectorAll('.pad');
     const kitButtons = document.querySelectorAll('.kit-button');
-    let currentKit = 'Drums'; // Default kit
+    let currentKit = 'Drums';
 
-    // --- FUNCTIONS ---
     function playSound(soundPath) {
+        if (!soundPath) {
+            console.log("Empty pad");
+            return;
+        }
         const audio = new Audio(soundPath);
         audio.play();
     }
     
     function loadKit(kitName) {
         currentKit = kitName;
-        pads.forEach((pad, index) => {
-            const padNumber = index + 1;
-            const sound = soundKits[kitName][`pad${padNumber}`];
-            pad.dataset.sound = sound || ''; // Set sound or leave empty if not defined
+        const kit = soundKits[kitName] || {};
+        pads.forEach((pad) => {
+            const padNumber = pad.dataset.pad;
+            const sound = kit[`pad${padNumber}`];
+            pad.dataset.sound = sound || '';
         });
 
-        // Update active button style
         kitButtons.forEach(button => {
-            if (button.dataset.kit === kitName) {
-                button.classList.add('active');
-            } else {
-                button.classList.remove('active');
-            }
+            button.classList.toggle('active', button.dataset.kit === kitName);
         });
     }
 
-    // --- EVENT LISTENERS ---
-    
-    // Kit selector buttons
     kitButtons.forEach(button => {
         button.addEventListener('click', () => {
             const kit = button.dataset.kit;
@@ -59,13 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Beat pad clicks
     pads.forEach(pad => {
         pad.addEventListener('click', () => {
             if (pad.dataset.sound) {
                 playSound(pad.dataset.sound);
-                
-                // Visual feedback
                 pad.classList.add('playing');
                 setTimeout(() => {
                     pad.classList.remove('playing');
@@ -74,6 +67,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- INITIALIZATION ---
-    loadKit(currentKit); // Load the default kit on page load
+    loadKit(currentKit);
 });
