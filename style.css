@@ -1,148 +1,91 @@
+/* Import an elegant font for the title from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap');
+
+/* Define the color palette from your reference image */
+:root {
+    --background-color: #121212;
+    --primary-yellow: #facc15; /* A nice, vibrant yellow */
+    --pad-bg: #2a2a2a;
+    --pad-border: #444444;
+    --text-color: #ffffff;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #1a1a1a;
-    color: #f0f0f0;
-    margin: 0;
-    background-image: url('mustang_background.jpg');
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    background-color: var(--background-color);
+    /* This will use your existing background image but make it dark */
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('your-background.jpg');
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center;
-}
-
-.container {
-    background-color: rgba(30, 30, 30, 0.7);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
-    text-align: center;
-    width: 90%;
-    max-width: 800px;
-}
-
-h1 {
-    color: #FFD700;
-    margin-bottom: 25px;
-}
-
-#car-info {
-    border: 2px solid #FFD700;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    background-color: rgba(255, 255, 0, 0.1);
-}
-
-#car-info p {
-    margin: 10px 0;
-    font-size: 1.1em;
-}
-
-#beat-pad {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.beat-button {
-    background-color: #555;
-    color: #fff;
-    padding: 25px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    box-shadow: 0 4px #333;
-}
-
-.beat-button:hover {
-    background-color: #666;
-}
-
-.beat-button:active {
-    background-color: #FFD700;
-    transform: translateY(2px);
-    box-shadow: 0 2px #333;
-}
-
-#sequencer-container {
-    overflow-x: auto;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-#sequencer {
+    color: var(--text-color);
     display: flex;
-    justify-content: flex-start;
-    border: 1px solid #FFD700;
-}
-
-.sequencer-row {
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    min-width: 200px;
+    padding: 20px;
 }
 
-.sequencer-label {
-    width: 60px;
-    text-align: right;
-    padding-right: 10px;
-    font-size: 0.9em;
-    color: #FFD700;
+.main-title {
+    font-family: 'Lora', serif; /* The elegant, italicized font */
+    font-size: 2.5rem;
+    margin-bottom: 30px;
 }
 
-.sequencer-cell {
-    width: 30px;
-    height: 30px;
-    border: 1px solid rgba(255, 255, 0, 0.3);
-    cursor: pointer;
-    background-color: rgba(255, 255, 0, 0.05);
-    transition: background-color 0.1s;
-}
-
-.sequencer-cell.active {
-    background-color: #FFD700;
-}
-
-.sequencer-cell.playing {
-    border: 2px solid #fff;
-}
-
-#controls {
+/* Styling for the top row of kit selection buttons */
+.kit-selector {
     display: flex;
-    justify-content: center;
     gap: 15px;
-    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
-.control-button {
-    background-color: #008CBA;
-    color: #fff;
-    padding: 15px 30px;
-    border: none;
+.kit-button {
+    background-color: var(--pad-bg);
+    border: 2px solid var(--pad-border);
     border-radius: 8px;
-    font-size: 1.1em;
+    color: var(--text-color);
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    width: 120px; /* Give them a fixed width */
 }
 
-.control-button:hover {
-    background-color: #007699;
+.kit-button img {
+    height: 30px; /* Adjust size of your icon */
 }
 
-.control-button:active {
-    background-color: #005f7a;
-    transform: translateY(2px);
+.kit-button:hover {
+    border-color: var(--primary-yellow);
 }
 
-#message-area {
-    margin-top: 20px;
-    font-size: 1.3em;
-    color: #00ff00;
-    min-height: 50px;
+/* Style for the currently active kit button */
+.kit-button.active {
+    background-color: var(--primary-yellow);
+    color: #121212; /* Dark text on the yellow button */
+    font-weight: bold;
+}
+
+/* Styling for the Beat Pad */
+.beat-pad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    width: clamp(300px, 90vw, 500px); /* Responsive width */
+}
+
+.pad {
+    aspect-ratio: 1 / 1;
+    background-color: var(--pad-bg);
+    border: 2px solid var(--pad-border);
+    border-radius: 8px;
+    transition: all 0.07s ease;
+}
+
+.pad.playing {
+    transform: scale(0.96);
+    background-color: var(--primary-yellow);
+    box-shadow: 0 0 25px var(--primary-yellow);
+    border-color: var(--primary-yellow);
 }
