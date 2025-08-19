@@ -5,19 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Favorite Driver</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.58/build/Tone.min.js"></script>
 </head>
 <body>
 
-    <div id="mini-beat-pad">
-        <button class="beat-button-mini" id="kickBtnMini">KICK</button>
-        <button class="beat-button-mini" id="snareBtnMini">SNARE</button>
-        <button class="beat-button-mini" id="hihatClosedBtnMini">HI-HAT</button>
-        <button class="beat-button-mini" id="synthBtnMini">SYNTH</button>
-    </div>
-
     <div class="container">
         <h1>Welcome to the GT Beat Lab</h1>
+        <div id="car-info">
+        </div>
+
         <div id="beat-pad">
             <button class="beat-button" id="barbieBtn" data-sound="barbie.mp3">BARBIE</button>
             <button class="beat-button" id="cartiHahahahBtn" data-sound="carti_hahahah.mp3">HAHAHAH</button>
@@ -38,8 +33,7 @@
         <div id="sequencer-container">
             <div id="sequencer"></div>
         </div>
-        <div id="car-info">
-        </div>
+
         <div id="controls">
             <button class="control-button" id="playBtn">Play Beat</button>
             <button class="control-button" id="clearBtn">Clear Beat</button>
