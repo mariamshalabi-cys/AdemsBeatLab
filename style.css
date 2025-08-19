@@ -75,7 +75,7 @@ h1 {
     cursor: pointer;
     transition: transform 0.1s;
     box-shadow: none;
-    height: 120px;
+    height: 90px;
 }
 
 .beat-button:active {
