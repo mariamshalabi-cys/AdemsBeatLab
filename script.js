@@ -155,28 +155,3 @@ document.addEventListener('DOMContentLoaded', () => {
     createSequencer();
     setupAllListeners();
 });
-document.addEventListener('DOMContentLoaded', () => {
-    const bpmSlider = document.getElementById('bpm-slider');
-    const bpmValue = document.getElementById('bpm-value');
-
-    bpmSlider.addEventListener('input', (event) => {
-        const bpm = event.target.value;
-        bpmValue.textContent = bpm;
-        const interval = 60000 / bpm;
-        clearInterval(playbackInterval);
-        playbackInterval = setInterval(() => {
-            if (currentStep < NUM_STEPS) {
-                soundsToSequence.forEach(sound => {
-                    if (sequencerState[sound.id][currentStep]) {
-                        playSound(sound.id);
-                    }
-                });
-                currentStep++;
-            } else {
-                clearInterval(playbackInterval);
-                isPlaying = false;
-                updateMessage("Beat finished.");
-            }
-        }, interval);
-    });
-});
