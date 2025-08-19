@@ -1,10 +1,8 @@
-/* Import an elegant font for the title from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap');
 
-/* Define the color palette from your reference image */
 :root {
     --background-color: #121212;
-    --primary-yellow: #facc15; /* A nice, vibrant yellow */
+    --primary-yellow: #facc15;
     --pad-bg: #2a2a2a;
     --pad-border: #444444;
     --text-color: #ffffff;
@@ -13,8 +11,7 @@
 body {
     font-family: 'Helvetica', 'Arial', sans-serif;
     background-color: var(--background-color);
-    /* This will use your existing background image but make it dark */
-    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('your-background.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('mustang_background.jpg');
     background-size: cover;
     background-position: center;
     color: var(--text-color);
@@ -22,19 +19,23 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .main-title {
-    font-family: 'Lora', serif; /* The elegant, italicized font */
+    font-family: 'Lora', serif;
     font-size: 2.5rem;
     margin-bottom: 30px;
+    text-align: center;
 }
 
-/* Styling for the top row of kit selection buttons */
 .kit-selector {
     display: flex;
     gap: 15px;
     margin-bottom: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .kit-button {
@@ -49,30 +50,28 @@ body {
     align-items: center;
     gap: 8px;
     transition: all 0.2s ease;
-    width: 120px; /* Give them a fixed width */
+    width: 120px;
 }
 
 .kit-button img {
-    height: 30px; /* Adjust size of your icon */
+    height: 30px;
 }
 
 .kit-button:hover {
     border-color: var(--primary-yellow);
 }
 
-/* Style for the currently active kit button */
 .kit-button.active {
     background-color: var(--primary-yellow);
-    color: #121212; /* Dark text on the yellow button */
+    color: #121212;
     font-weight: bold;
 }
 
-/* Styling for the Beat Pad */
 .beat-pad {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
-    width: clamp(300px, 90vw, 500px); /* Responsive width */
+    width: clamp(300px, 90vw, 500px);
 }
 
 .pad {
@@ -81,6 +80,7 @@ body {
     border: 2px solid var(--pad-border);
     border-radius: 8px;
     transition: all 0.07s ease;
+    cursor: pointer;
 }
 
 .pad.playing {
