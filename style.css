@@ -205,3 +205,6 @@ body {
         box-shadow: 0 0 10px rgba(250, 204, 21, 0.3);
     }
 }
+.hidden {
+    display: none !important;
+}
