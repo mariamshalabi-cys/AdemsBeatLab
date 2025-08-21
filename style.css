@@ -31,6 +31,11 @@ body {
     text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
 }
 
+.hidden {
+    display: none !important;
+}
+
+/* Mode Switcher */
 .mode-switcher {
     display: flex;
     background-color: var(--pad-bg);
@@ -55,10 +60,7 @@ body {
     color: #121212;
 }
 
-.hidden {
-    display: none !important;
-}
-
+/* Kit Selector */
 .kit-selector {
     display: flex;
     gap: 15px;
@@ -91,6 +93,7 @@ body {
     animation: breathing-glow 3s infinite ease-in-out;
 }
 
+/* Beat Pad */
 .beat-pad {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -120,7 +123,20 @@ body {
     border-color: var(--primary-yellow);
 }
 
-.transport-controls { margin-bottom: 20px; }
+/* Sequencer */
+.sequencer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    width: clamp(300px, 90vw, 500px);
+}
+
+.transport-controls {
+    display: flex;
+    justify-content: center;
+}
+
 #play-stop-button {
     background-color: var(--primary-yellow);
     color: #121212;
@@ -132,21 +148,27 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
 }
+
 #play-stop-button:hover { filter: brightness(1.1); }
 
-.sequencer {
+.instrument-row {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    background-color: #222;
-    padding: 10px;
-    border-radius: 8px;
+    align-items: center;
+    gap: 10px;
 }
 
-.instrument-row {
+.instrument-label {
+    min-width: 60px;
+    font-size: 0.9rem;
+    text-align: right;
+    font-weight: bold;
+}
+
+.steps-container {
     display: grid;
     grid-template-columns: repeat(16, 1fr);
     gap: 5px;
+    width: 100%;
 }
 
 .step {
