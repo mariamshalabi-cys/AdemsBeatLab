@@ -82,6 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Function to show/hide sequencer rows based on selected kit
+    function showSequencerKit(kitName) {
+        instrumentRows.forEach(row => {
+            row.classList.add('hidden');
+            if (row.dataset.kit === kitName) {
+                row.classList.remove('hidden');
+            }
+        });
+    }
+
     // Function to handle the sequencing logic
     function playSequence() {
         if (!isPlaying) return;
@@ -93,92 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentSteps = document.querySelectorAll(`.step[data-step="${currentStep + 1}"]`);
         currentSteps.forEach(step => step.classList.add('playing'));
 
-        // Play sounds for active steps in ALL rows
-        instrumentRows.forEach(row => {
-            const kitName = row.dataset.kit;
+        // Play sounds for active steps in the currently visible row
+        const visibleRow = document.querySelector(`.instrument-row:not(.hidden)`);
+        if (visibleRow) {
+            const kitName = visibleRow.dataset.kit;
             const currentKitData = soundKits[kitName];
-            const currentStepEl = row.querySelector(`.step[data-step="${currentStep + 1}"]`);
-            
+            const currentStepEl = visibleRow.querySelector(`.step[data-step="${currentStep + 1}"]`);
             if (currentStepEl && currentStepEl.classList.contains('active')) {
-                const padNumber = parseInt(currentStepEl.dataset.step);
-                const soundPath = currentKitData[`pad${padNumber}`];
-                if (soundPath) {
-                    playSound(soundPath);
-                }
-            }
-        });
-        
-        // Move to the next step
-        currentStep = (currentStep + 1) % 16;
-        setTimeout(playSequence, (60 / tempo) * 1000);
-    }
-    
-    // EVENT LISTENERS
-
-    // Kit Selector Buttons
-    kitButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const kit = button.dataset.kit;
-            loadKit(kit);
-        });
-    });
-
-    // Beat Pad Click
-    pads.forEach(pad => {
-        pad.addEventListener('click', () => {
-            if (pad.dataset.sound) {
-                playSound(pad.dataset.sound);
-                pad.classList.add('playing');
-                setTimeout(() => {
-                    pad.classList.remove('playing');
-                }, 150);
-            }
-        });
-    });
-
-    // Mode Switcher Buttons
-    modeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const mode = button.dataset.mode;
-            modeButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-
-            if (mode === 'beat-pad') {
-                beatPad.classList.remove('hidden');
-                kitSelector.classList.remove('hidden');
-                sequencer.classList.add('hidden');
-                if(isPlaying) {
-                    isPlaying = false;
-                    playStopBtn.textContent = 'Play';
-                    steps.forEach(step => step.classList.remove('playing'));
-                }
-            } else {
-                beatPad.classList.add('hidden');
-                kitSelector.classList.add('hidden');
-                sequencer.classList.remove('hidden');
-            }
-        });
-    });
-
-    // Sequencer Play/Stop Button
-    playStopBtn.addEventListener('click', () => {
-        isPlaying = !isPlaying;
-        playStopBtn.textContent = isPlaying ? 'Stop' : 'Play';
-        if (isPlaying) {
-            currentStep = 0;
-            playSequence();
-        } else {
-            steps.forEach(step => step.classList.remove('playing'));
-        }
-    });
-
-    // Sequencer Step Toggling
-    steps.forEach(step => {
-        step.addEventListener('click', () => {
-            step.classList.toggle('active');
-        });
-    });
-
-    // Initial load
-    loadKit(currentKit);
-});
+                const padNumber = parseInt(currentStep
