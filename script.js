@@ -6,17 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
             pad3: 'sounds/hihat_closed.mp3',
             pad4: 'sounds/hihat_open.mp3',
             pad5: 'sounds/lighter.mp3',
-            pad6: 'sounds/clap.mp3', // Placeholder: assuming you have this file
-            pad7: 'sounds/cowbell.mp3', // Placeholder: assuming you have this file
-            pad8: 'sounds/shaker.mp3', // Placeholder: assuming you have this file
-            pad9: 'sounds/crash.mp3', // Placeholder: assuming you have this file
-            pad10: 'sounds/ride.mp3', // Placeholder: assuming you have this file
-            pad11: 'sounds/tom.mp3', // Placeholder: assuming you have this file
-            pad12: 'sounds/rimshot.mp3', // Placeholder: assuming you have this file
-            pad13: 'sounds/perc1.mp3', // a placeholder for a percussion sound
-            pad14: 'sounds/perc2.mp3', // a placeholder for a percussion sound
-            pad15: 'sounds/perc3.mp3', // a placeholder for a percussion sound
-            pad16: 'sounds/perc4.mp3', // a placeholder for a percussion sound
+            pad6: 'sounds/clap.mp3',
+            pad7: 'sounds/cowbell.mp3', 
+            pad8: 'sounds/shaker.mp3',
+            pad9: 'sounds/crash.mp3', 
+            pad10: 'sounds/ride.mp3',
+            pad11: 'sounds/tom.mp3',
+            pad12: 'sounds/rimshot.mp3',
+            pad13: 'sounds/perc1.mp3', 
+            pad14: 'sounds/perc2.mp3', 
+            pad15: 'sounds/perc3.mp3', 
+            pad16: 'sounds/perc4.mp3',
         },
         'Bass': {
             pad1: 'sounds/synth_chord.mp3',
@@ -82,16 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to show/hide sequencer rows based on selected kit
-    function showSequencerKit(kitName) {
-        instrumentRows.forEach(row => {
-            row.classList.add('hidden');
-            if (row.dataset.kit === kitName) {
-                row.classList.remove('hidden');
-            }
-        });
-    }
-
     // Function to handle the sequencing logic
     function playSequence() {
         if (!isPlaying) return;
@@ -103,12 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentSteps = document.querySelectorAll(`.step[data-step="${currentStep + 1}"]`);
         currentSteps.forEach(step => step.classList.add('playing'));
 
-        // Play sounds for active steps in the currently visible row
-        const visibleRow = document.querySelector(`.instrument-row:not(.hidden)`);
-        if (visibleRow) {
-            const kitName = visibleRow.dataset.kit;
+        // Play sounds for active steps in ALL rows
+        instrumentRows.forEach(row => {
+            const kitName = row.dataset.kit;
             const currentKitData = soundKits[kitName];
-            const currentStepEl = visibleRow.querySelector(`.step[data-step="${currentStep + 1}"]`);
+            const currentStepEl = row.querySelector(`.step[data-step="${currentStep + 1}"]`);
+            
             if (currentStepEl && currentStepEl.classList.contains('active')) {
                 const padNumber = parseInt(currentStepEl.dataset.step);
                 const soundPath = currentKitData[`pad${padNumber}`];
@@ -116,8 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     playSound(soundPath);
                 }
             }
-        }
-        
+        });
+
         // Move to the next step
         currentStep = (currentStep + 1) % 16;
         setTimeout(playSequence, (60 / tempo) * 1000);
@@ -130,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const kit = button.dataset.kit;
             loadKit(kit);
-            showSequencerKit(kit);
         });
     });
 
@@ -167,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 beatPad.classList.add('hidden');
                 kitSelector.classList.add('hidden');
                 sequencer.classList.remove('hidden');
-                showSequencerKit(currentKit);
             }
         });
     });
@@ -193,5 +181,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial load
     loadKit(currentKit);
-    showSequencerKit(currentKit);
 });
