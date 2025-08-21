@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const soundKits = {
         'Drums': {
             pad1: 'sounds/kick.mp3',
-            pad2: 'sounds/snare.mp3', // Corrected from snare.mps.mp3
+            pad2: 'sounds/snare.mp3', // checked manually
             pad3: 'sounds/hihat_closed.mp3',
-            pad4: 'sounds/hihat_open.mp3',
+            pad4: 'sounds/hihat_closed.mp3.mp3', //checked manually
             pad5: 'sounds/lighter.mp3',
             pad6: 'sounds/clap.mp3', // assuming this is a clap sound
             pad7: 'sounds/cowbell.mp3', // assuming this is a cowbell sound
@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
             pad4: 'sounds/bass_note_F.mp3', // Placeholder
         },
         'Synth': {
-            pad1: 'sounds/synth_chord.mp3',
-            pad2: 'sounds/synth_arpeggio.mp3', // Placeholder
+            pad1: 'sounds/synth_chord.mp3', // manual check
+            pad2: 'sounds/synth_chord.mp3-2', // manual check
             pad3: 'sounds/synth_pad.mp3', // Placeholder
             pad4: 'sounds/synth_lead.mp3', // Placeholder
         },
