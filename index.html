@@ -1,192 +1,154 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adem's Beat Lab</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1 class="main-title">Adem's Beat Lab</h1>
 
-:root {
-    --background-color: #121212;
-    --primary-yellow: #facc15;
-    --pad-bg: #2a2a2a;
-    --pad-border: #444444;
-    --text-color: #ffffff;
-}
+    <div class="mode-switcher">
+        <button class="mode-btn active" data-mode="beat-pad">Beat Pad</button>
+        <button class="mode-btn" data-mode="sequencer">Sequencer</button>
+    </div>
 
-body {
-    font-family: 'Helvetica', 'Arial', sans-serif;
-    background-color: var(--background-color);
-    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('mustang_background.jpg');
-    background-size: cover;
-    background-position: center;
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    min-height: 100vh;
-    box-sizing: border-box;
-}
+    <div class="kit-selector">
+        <button class="kit-button active" data-kit="Drums">
+            <img src="mustang_icon.png" alt="Drums Icon">
+            <span>Drums</span>
+        </button>
+        <button class="kit-button" data-kit="Bass">
+            <img src="mustang_icon.png" alt="Bass Icon">
+            <span>Bass</span>
+        </button>
+        <button class="kit-button" data-kit="Synth">
+            <img src="mustang_icon.png" alt="Synth Icon">
+            <span>Synth</span>
+        </button>
+        <button class="kit-button" data-kit="FX">
+            <img src="mustang_icon.png" alt="FX Icon">
+            <span>FX</span>
+        </button>
+    </div>
 
-.main-title {
-    font-family: 'Lora', serif;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    text-align: center;
-    text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
-}
+    <div class="beat-pad">
+        <div class="pad" data-pad="1"></div>
+        <div class="pad" data-pad="2"></div>
+        <div class="pad" data-pad="3"></div>
+        <div class="pad" data-pad="4"></div>
+        <div class="pad" data-pad="5"></div>
+        <div class="pad" data-pad="6"></div>
+        <div class="pad" data-pad="7"></div>
+        <div class="pad" data-pad="8"></div>
+        <div class="pad" data-pad="9"></div>
+        <div class="pad" data-pad="10"></div>
+        <div class="pad" data-pad="11"></div>
+        <div class="pad" data-pad="12"></div>
+        <div class="pad" data-pad="13"></div>
+        <div class="pad" data-pad="14"></div>
+        <div class="pad" data-pad="15"></div>
+        <div class="pad" data-pad="16"></div>
+    </div>
 
-.hidden {
-    display: none !important;
-}
+    <div class="sequencer hidden">
+        <div class="transport-controls">
+            <button id="play-stop-button">Play</button>
+        </div>
+        
+        <div class="instrument-row" data-kit="Drums">
+            <span class="instrument-label">Drums</span>
+            <div class="steps-container">
+                <div class="step" data-step="1"></div>
+                <div class="step" data-step="2"></div>
+                <div class="step" data-step="3"></div>
+                <div class="step" data-step="4"></div>
+                <div class="step" data-step="5"></div>
+                <div class="step" data-step="6"></div>
+                <div class="step" data-step="7"></div>
+                <div class="step" data-step="8"></div>
+                <div class="step" data-step="9"></div>
+                <div class="step" data-step="10"></div>
+                <div class="step" data-step="11"></div>
+                <div class="step" data-step="12"></div>
+                <div class="step" data-step="13"></div>
+                <div class="step" data-step="14"></div>
+                <div class="step" data-step="15"></div>
+                <div class="step" data-step="16"></div>
+            </div>
+        </div>
+        
+        <div class="instrument-row hidden" data-kit="Bass">
+            <span class="instrument-label">Bass</span>
+            <div class="steps-container">
+                <div class="step" data-step="1"></div>
+                <div class="step" data-step="2"></div>
+                <div class="step" data-step="3"></div>
+                <div class="step" data-step="4"></div>
+                <div class="step" data-step="5"></div>
+                <div class="step" data-step="6"></div>
+                <div class="step" data-step="7"></div>
+                <div class="step" data-step="8"></div>
+                <div class="step" data-step="9"></div>
+                <div class="step" data-step="10"></div>
+                <div class="step" data-step="11"></div>
+                <div class="step" data-step="12"></div>
+                <div class="step" data-step="13"></div>
+                <div class="step" data-step="14"></div>
+                <div class="step" data-step="15"></div>
+                <div class="step" data-step="16"></div>
+            </div>
+        </div>
+        
+        <div class="instrument-row hidden" data-kit="Synth">
+            <span class="instrument-label">Synth</span>
+            <div class="steps-container">
+                <div class="step" data-step="1"></div>
+                <div class="step" data-step="2"></div>
+                <div class="step" data-step="3"></div>
+                <div class="step" data-step="4"></div>
+                <div class="step" data-step="5"></div>
+                <div class="step" data-step="6"></div>
+                <div class="step" data-step="7"></div>
+                <div class="step" data-step="8"></div>
+                <div class="step" data-step="9"></div>
+                <div class="step" data-step="10"></div>
+                <div class="step" data-step="11"></div>
+                <div class="step" data-step="12"></div>
+                <div class="step" data-step="13"></div>
+                <div class="step" data-step="14"></div>
+                <div class="step" data-step="15"></div>
+                <div class="step" data-step="16"></div>
+            </div>
+        </div>
+        
+        <div class="instrument-row hidden" data-kit="FX">
+            <span class="instrument-label">FX</span>
+            <div class="steps-container">
+                <div class="step" data-step="1"></div>
+                <div class="step" data-step="2"></div>
+                <div class="step" data-step="3"></div>
+                <div class="step" data-step="4"></div>
+                <div class="step" data-step="5"></div>
+                <div class="step" data-step="6"></div>
+                <div class="step" data-step="7"></div>
+                <div class="step" data-step="8"></div>
+                <div class="step" data-step="9"></div>
+                <div class="step" data-step="10"></div>
+                <div class="step" data-step="11"></div>
+                <div class="step" data-step="12"></div>
+                <div class="step" data-step="13"></div>
+                <div class="step" data-step="14"></div>
+                <div class="step" data-step="15"></div>
+                <div class="step" data-step="16"></div>
+            </div>
+        </div>
+    </div>
 
-/* Mode Switcher */
-.mode-switcher {
-    display: flex;
-    background-color: var(--pad-bg);
-    border-radius: 8px;
-    padding: 5px;
-    margin-bottom: 30px;
-}
-
-.mode-btn {
-    background-color: transparent;
-    border: none;
-    color: var(--text-color);
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s ease;
-}
-
-.mode-btn.active {
-    background-color: var(--primary-yellow);
-    color: #121212;
-}
-
-/* Kit Selector */
-.kit-selector {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.kit-button {
-    background-color: var(--pad-bg);
-    border: 2px solid var(--pad-border);
-    border-radius: 8px;
-    color: var(--text-color);
-    cursor: pointer;
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease-in-out;
-    width: 120px;
-}
-
-.kit-button img { height: 30px; }
-.kit-button:hover { border-color: var(--primary-yellow); }
-.kit-button.active {
-    background-color: var(--primary-yellow);
-    color: #121212;
-    font-weight: bold;
-    animation: breathing-glow 3s infinite ease-in-out;
-}
-
-/* Beat Pad */
-.beat-pad {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    width: clamp(300px, 90vw, 500px);
-}
-
-.pad {
-    aspect-ratio: 1 / 1;
-    background-color: var(--pad-bg);
-    border: 2px solid var(--pad-border);
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    transition: all 0.15s ease-out;
-}
-
-.pad:hover {
-    transform: scale(1.03);
-    border-color: rgba(250, 204, 21, 0.5);
-}
-
-.pad.playing {
-    transform: scale(0.96);
-    background-color: var(--primary-yellow);
-    box-shadow: 0 0 25px var(--primary-yellow);
-    border-color: var(--primary-yellow);
-}
-
-/* Sequencer */
-.sequencer {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 10px;
-    width: clamp(300px, 90vw, 500px);
-}
-
-.transport-controls {
-    display: flex;
-    justify-content: center;
-}
-
-#play-stop-button {
-    background-color: var(--primary-yellow);
-    color: #121212;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 30px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-#play-stop-button:hover { filter: brightness(1.1); }
-
-.instrument-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.instrument-label {
-    min-width: 60px;
-    font-size: 0.9rem;
-    text-align: right;
-    font-weight: bold;
-}
-
-.steps-container {
-    display: grid;
-    grid-template-columns: repeat(16, 1fr);
-    gap: 5px;
-    width: 100%;
-}
-
-.step {
-    aspect-ratio: 1 / 1;
-    background-color: var(--pad-bg);
-    border-radius: 4px;
-    transition: all 0.1s ease;
-    cursor: pointer;
-}
-
-.step.active { background-color: var(--primary-yellow); }
-.step.playing {
-    filter: brightness(1.5);
-    transform: scale(1.05);
-}
-
-@keyframes breathing-glow {
-    0% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
-    50% { box-shadow: 0 0 20px rgba(250, 204, 21, 0.7); }
-    100% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.3); }
-}
+    <script src="script.js"></script>
+</body>
+</html>
