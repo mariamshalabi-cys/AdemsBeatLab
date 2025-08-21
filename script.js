@@ -2,20 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const soundKits = {
         'Drums': {
             pad1: 'sounds/kick.mp3',
-            pad2: 'sounds/snare.mp3', 
+            pad2: 'sounds/snare.mp3',
             pad3: 'sounds/hihat_closed.mp3',
             pad4: 'sounds/hihat_open.mp3',
             pad5: 'sounds/lighter.mp3',
             pad6: 'sounds/clap.mp3',
-            pad7: 'sounds/cowbell.mp3', 
+            pad7: 'sounds/cowbell.mp3',
             pad8: 'sounds/shaker.mp3',
-            pad9: 'sounds/crash.mp3', 
+            pad9: 'sounds/crash.mp3',
             pad10: 'sounds/ride.mp3',
             pad11: 'sounds/tom.mp3',
             pad12: 'sounds/rimshot.mp3',
-            pad13: 'sounds/perc1.mp3', 
-            pad14: 'sounds/perc2.mp3', 
-            pad15: 'sounds/perc3.mp3', 
+            pad13: 'sounds/perc1.mp3',
+            pad14: 'sounds/perc2.mp3',
+            pad15: 'sounds/perc3.mp3',
             pad16: 'sounds/perc4.mp3',
         },
         'Bass': {
@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const kitButtons = document.querySelectorAll('.kit-button');
     let currentKit = 'Drums';
 
-    // Sequencer elements
     const modeButtons = document.querySelectorAll('.mode-btn');
     const beatPad = document.querySelector('.beat-pad');
     const kitSelector = document.querySelector('.kit-selector');
@@ -56,9 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isPlaying = false;
     let currentStep = 0;
-    let tempo = 120; // Beats Per Minute
+    let tempo = 120;
 
-    // Function to handle sound playback for both modes
     function playSound(soundPath) {
         if (!soundPath) {
             console.log("Empty pad clicked.");
@@ -68,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
         audio.play();
     }
     
-    // Function to load the sound kit for the pads
     function loadKit(kitName) {
         currentKit = kitName;
         const kit = soundKits[kitName] || {};
@@ -82,23 +79,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to handle the sequencing logic
+    function showSequencerKit(kitName) {
+        instrumentRows.forEach(row => {
+            row.classList.add('hidden');
+            if (row.dataset.kit === kitName) {
+                row.classList.remove('hidden');
+            }
+        });
+    }
+
     function playSequence() {
         if (!isPlaying) return;
 
-        // Reset previous step highlight
         steps.forEach(step => step.classList.remove('playing'));
 
-        // Highlight the current step
         const currentSteps = document.querySelectorAll(`.step[data-step="${currentStep + 1}"]`);
         currentSteps.forEach(step => step.classList.add('playing'));
 
-        // Play sounds for active steps in ALL rows
-        instrumentRows.forEach(row => {
-            const kitName = row.dataset.kit;
+        const visibleRow = document.querySelector(`.instrument-row:not(.hidden)`);
+        if (visibleRow) {
+            const kitName = visibleRow.dataset.kit;
             const currentKitData = soundKits[kitName];
-            const currentStepEl = row.querySelector(`.step[data-step="${currentStep + 1}"]`);
-            
+            const currentStepEl = visibleRow.querySelector(`.step[data-step="${currentStep + 1}"]`);
             if (currentStepEl && currentStepEl.classList.contains('active')) {
                 const padNumber = parseInt(currentStepEl.dataset.step);
                 const soundPath = currentKitData[`pad${padNumber}`];
@@ -106,24 +108,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     playSound(soundPath);
                 }
             }
-        });
-
-        // Move to the next step
+        }
+        
         currentStep = (currentStep + 1) % 16;
         setTimeout(playSequence, (60 / tempo) * 1000);
     }
     
-    // EVENT LISTENERS
-
-    // Kit Selector Buttons
     kitButtons.forEach(button => {
         button.addEventListener('click', () => {
             const kit = button.dataset.kit;
             loadKit(kit);
+            showSequencerKit(kit);
         });
     });
 
-    // Beat Pad Click
     pads.forEach(pad => {
         pad.addEventListener('click', () => {
             if (pad.dataset.sound) {
@@ -136,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Mode Switcher Buttons
     modeButtons.forEach(button => {
         button.addEventListener('click', () => {
             const mode = button.dataset.mode;
@@ -156,11 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 beatPad.classList.add('hidden');
                 kitSelector.classList.add('hidden');
                 sequencer.classList.remove('hidden');
+                showSequencerKit(currentKit);
             }
         });
     });
 
-    // Sequencer Play/Stop Button
     playStopBtn.addEventListener('click', () => {
         isPlaying = !isPlaying;
         playStopBtn.textContent = isPlaying ? 'Stop' : 'Play';
@@ -172,13 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Sequencer Step Toggling
     steps.forEach(step => {
         step.addEventListener('click', () => {
             step.classList.toggle('active');
         });
     });
 
-    // Initial load
     loadKit(currentKit);
+    showSequencerKit(currentKit);
 });
