@@ -208,3 +208,34 @@ body {
 .hidden {
     display: none !important;
 }
+/* Make the whole sequencer wider */
+.sequencer {
+    width: clamp(300px, 90vw, 800px); /* Increased max-width from 500px to 800px */
+    gap: 15px;
+}
+
+/* Add space below the 'Play' button */
+.transport-controls {
+    margin-bottom: 20px;
+}
+
+/* Add vertical spacing BETWEEN each instrument track */
+#sequencer-tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* This adds the space between rows */
+}
+
+/* Give instrument labels more room and align them */
+.instrument-label {
+    min-width: 90px;      /* Increased width for more space */
+    padding-right: 10px;  /* Pushes text away from the steps */
+    font-size: 0.85rem;
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Add a bit more space between the individual steps */
+.steps-container {
+    gap: 6px; /* Increased from 5px */
+}
