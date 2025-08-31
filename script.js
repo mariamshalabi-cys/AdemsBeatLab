@@ -13,17 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DATA ---
     const soundKits = {
         'Drums': {
-            pad1: 'sounds/CKV1_Snare Art 1.wav', pad2: 'sounds/CKV1_Snare Art 2.wav',
-            pad3: 'sounds/CKV1_Snare Art 3.wav', pad4: 'sounds/CKV1_Snare Art 4.wav',
-            pad5: 'sounds/CKV1_Snare Art 5.wav', pad6: 'sounds/CKV1_Snare Art 6.wav',
-            pad7: 'sounds/CKV1_Snare Art 7.wav', pad8: 'sounds/CKV1_Snare Art 8.wav',
+            pad1: 'sounds/CKV1_Snare Art 1.wav', pad2: 'sounds/sequencer hihat 1.mp3',
+            pad3: 'sounds/sequencer hihat 2.mp3', pad4: 'sounds/CKV1_Snare Art 4.wav',
+            pad5: 'sounds/CKV1_Snare Art 5.wav', pad6: 'sounds/sequencer kick.wav',
+            pad7: 'sounds/sequencer snare.wav', pad8: 'sounds/CKV1_Snare Art 8.wav',
             pad9: 'sounds/CKV1_Snare Flam Extra Soft 1.wav', pad10: 'sounds/CKV1_Snare Flam Loud 1.wav',
             pad11: 'sounds/CKV1_Snare Flam Medium 1.wav', pad12: 'sounds/CKV1_Snare Flam Soft 2.wav',
             pad13: 'sounds/CKV1_Snare Loud.wav', pad14: 'sounds/CKV1_Snare Medium.wav',
             pad15: 'sounds/CKV1_Snare Rimshot.wav', pad16: 'sounds/CKV1_Snare Soft.wav',
         },
         'Bass': {
-            pad1: 'sounds/bass 1.wav', pad2: 'sounds/bass 2.wav',
+            pad1: 'sounds/sequencer bass a.wav', pad2: 'sounds/sequencer bass g.wav',
             pad3: 'sounds/bass 3.wav', pad4: 'sounds/bass 4.wav',
             pad5: 'sounds/bass 5.wav', pad6: 'sounds/bass 6.wav',
             pad7: 'sounds/bass 7.wav', pad8: 'sounds/bass 8.wav',
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pad1: 'sounds/synth 1.wav', pad2: 'sounds/synth 2.wav',
             pad3: 'sounds/synth 3.wav', pad4: 'sounds/synth 4.wav',
             pad5: 'sounds/synth 5.wav', pad6: 'sounds/synth 6.wav',
-            pad7: 'sounds/synth 7.wav', pad8: 'sounds/synth 8.wav',
+            pad7: 'sounds/sequencer synth lead.wav', pad8: 'sounds/synth 8.wav',
             pad9: 'sounds/synth 9.wav', pad10: 'sounds/synth 10.wav',
             pad11: 'sounds/synth 10.wav', pad12: 'sounds/synth 12.wav',
             pad13: 'sounds/synth 11.wav', pad14: 'sounds/synth 14.wav',
