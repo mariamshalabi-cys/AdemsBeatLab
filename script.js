@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- DYNAMICALLY CREATE SEQUENCER STEPS (MOVED HERE) ---
+    const stepsContainers = document.querySelectorAll('.steps-container');
+    stepsContainers.forEach(container => {
+        for (let i = 1; i <= 16; i++) {
+            const step = document.createElement('div');
+            step.classList.add('step');
+            step.dataset.step = i;
+            container.appendChild(step);
+        }
+    });
+
     // --- DATA ---
     const soundKits = {
         'Drums': {
@@ -35,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const kitSelector = document.querySelector('.kit-selector');
     const sequencer = document.querySelector('.sequencer');
     const playStopBtn = document.getElementById('play-stop-button');
-    const steps = document.querySelectorAll('.step');
+    const steps = document.querySelectorAll('.step'); // This will now work correctly
     const instrumentRows = document.querySelectorAll('.instrument-row');
 
     // --- STATE ---
@@ -43,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPlaying = false;
     let currentStep = 0;
     let tempo = 120;
-    let intervalId = null; // To store the timer
+    let intervalId = null; 
 
     // --- FUNCTIONS ---
     function playSound(soundPath) {
@@ -69,18 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function playSequence() {
-        // Highlight the current step column
         document.querySelectorAll('.step.playing').forEach(s => s.classList.remove('playing'));
         document.querySelectorAll(`.step[data-step="${currentStep + 1}"]`).forEach(s => s.classList.add('playing'));
 
-        // Loop through EVERY instrument row to check for active steps
         instrumentRows.forEach(row => {
             const stepInThisRow = row.querySelector(`.step[data-step="${currentStep + 1}"]`);
             
-            // If the step is on, play its sound
             if (stepInThisRow && stepInThisRow.classList.contains('active')) {
                 const kitName = row.dataset.kit;
-                const padNumber = row.dataset.pad; // Assumes your HTML row has a data-pad attribute
+                const padNumber = row.dataset.pad;
                 
                 if (kitName && padNumber) {
                     const soundPath = soundKits[kitName][`pad${padNumber}`];
@@ -99,11 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isPlaying) {
             playStopBtn.textContent = 'Stop';
             currentStep = 0;
-            const stepInterval = (60 / tempo * 1000) / 4; // 16th notes
+            const stepInterval = (60 / tempo * 1000) / 4; 
             intervalId = setInterval(playSequence, stepInterval);
         } else {
             playStopBtn.textContent = 'Play';
-            clearInterval(intervalId); // Stop the loop
+            clearInterval(intervalId); 
             document.querySelectorAll('.step.playing').forEach(s => s.classList.remove('playing'));
         }
     }
@@ -133,16 +141,14 @@ document.addEventListener('DOMContentLoaded', () => {
             button.classList.add('active');
 
             if (mode === 'beat-pad') {
-                if (isPlaying) togglePlayback(); // Stop playback if switching away
+                if (isPlaying) togglePlayback(); 
                 beatPad.classList.remove('hidden');
                 kitSelector.classList.remove('hidden');
                 sequencer.classList.add('hidden');
-            } else { // Switching to sequencer mode
+            } else {
                 beatPad.classList.add('hidden');
                 kitSelector.classList.add('hidden');
                 sequencer.classList.remove('hidden');
-
-                // Make sure all instrument rows are visible
                 instrumentRows.forEach(row => row.classList.remove('hidden'));
             }
         });
@@ -158,5 +164,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- INITIALIZATION ---
     loadKit(currentKit);
-    // Set initial view to beat-pad
-    document.querySelector('.mode-btn[data-mode="beat
+    document.querySelector('.mode-btn[data-mode="beat-pad"]').click();
+});
