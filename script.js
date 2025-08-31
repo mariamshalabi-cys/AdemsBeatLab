@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 0;
     let tempo = 120;
     let intervalId = null; 
+    let alternatingTrackState = {};
 
     // --- FUNCTIONS ---
     function playSound(soundPath) {
@@ -95,17 +96,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function playSequence() {
-        document.querySelectorAll('.step.playing').forEach(s => s.classList.remove('playing'));
-        document.querySelectorAll(`.step[data-step="${currentStep + 1}"]`).forEach(s => s.classList.add('playing'));
+    // REPLACE your old playSequence function with this new one
+function playSequence() {
+    document.querySelectorAll('.step.playing').forEach(s => s.classList.remove('playing'));
+    document.querySelectorAll(`.step[data-step="${currentStep + 1}"]`).forEach(s => s.classList.add('playing'));
 
-        instrumentRows.forEach(row => {
-            const stepInThisRow = row.querySelector(`.step[data-step="${currentStep + 1}"]`);
-            
-            if (stepInThisRow && stepInThisRow.classList.contains('active')) {
-                const kitName = row.dataset.kit;
+    instrumentRows.forEach(row => {
+        const stepInThisRow = row.querySelector(`.step[data-step="${currentStep + 1}"]`);
+
+        if (stepInThisRow && stepInThisRow.classList.contains('active')) {
+            const kitName = row.dataset.kit;
+
+            // --- NEW: Check for an alternating track ---
+            if (row.hasAttribute('data-alternating-pads')) {
+                const padsString = row.dataset.alternatingPads; // e.g., "3,4"
+                const padsArray = padsString.split(',');       // e.g., ['3', '4']
+
+                // Get the current position for this track, default to 0
+                const stateKey = `${kitName}-${padsString}`;
+                const currentIndex = alternatingTrackState[stateKey] || 0;
+
+                // Get the pad number to play
+                const padNumber = padsArray[currentIndex];
+                const soundPath = soundKits[kitName][`pad${padNumber}`];
+                if (soundPath) {
+                    playSound(soundPath);
+                }
+
+                // Update the state for the next time
+                alternatingTrackState[stateKey] = (currentIndex + 1) % padsArray.length;
+
+            } else {
+                // --- This is the original logic for all other tracks ---
                 const padNumber = row.dataset.pad;
-                
                 if (kitName && padNumber) {
                     const soundPath = soundKits[kitName][`pad${padNumber}`];
                     if (soundPath) {
@@ -113,10 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
-        });
-        
-        currentStep = (currentStep + 1) % 16;
-    }
+        }
+    });
+
+    currentStep = (currentStep + 1) % 16;
+}
 
     function togglePlayback() {
         isPlaying = !isPlaying;
