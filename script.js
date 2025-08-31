@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DATA ---
     const soundKits = {
         'Drums': {
-            pad1: 'sounds/kick.mp3', pad2: 'sounds/snare.mp3',
-            pad3: 'sounds/hihat_closed.mp3', pad4: 'sounds/hihat_open.mp3',
-            pad5: 'sounds/lighter.mp3', pad6: 'sounds/clap.mp3',
-            pad7: 'sounds/cowbell.mp3', pad8: 'sounds/shaker.mp3',
-            pad9: 'sounds/crash.mp3', pad10: 'sounds/ride.mp3',
-            pad11: 'sounds/tom.mp3', pad12: 'sounds/rimshot.mp3',
-            pad13: 'sounds/perc1.mp3', pad14: 'sounds/perc2.mp3',
-            pad15: 'sounds/perc3.mp3', pad16: 'sounds/perc4.mp3',
+            pad1: 'sounds/CKV1_Snare Art 1.wav', pad2: 'sounds/CKV1_Snare Art 2.wav',
+            pad3: 'sounds/CKV1_Snare Art 3.wav', pad4: 'sounds/CKV1_Snare Art 4.wav',
+            pad5: 'sounds/CKV1_Snare Art 5.wav', pad6: 'sounds/CKV1_Snare Art 6.wav',
+            pad7: 'sounds/CKV1_Snare Art 7.wav', pad8: 'sounds/CKV1_Snare Art 8.wav',
+            pad9: 'sounds/CKV1_Snare Flam Extra Soft 1.wav', pad10: 'sounds/CKV1_Snare Flam Loud 1.wav',
+            pad11: 'sounds/CKV1_Snare Flam Medium 1.wav', pad12: 'sounds/CKV1_Snare Flam Soft 2.wav',
+            pad13: 'sounds/CKV1_Snare Loud.wav', pad14: 'sounds/CKV1_Snare Medium.wav',
+            pad15: 'sounds/CKV1_Snare Rimshot.wav', pad16: 'sounds/CKV1_Snare Soft.wav',
         },
         'Bass': {
             pad1: 'sounds/synth_chord.mp3', pad2: 'sounds/synth_arpeggio.mp3',
