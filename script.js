@@ -33,8 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
             pad15: 'sounds/bass 15.wav', pad16: 'sounds/bass 16.wav',
         },
         'Synth': {
-            pad1: 'sounds/synth_chord.mp3', pad2: 'sounds/synth_arpeggio.mp3',
-            pad3: 'sounds/synth_pad.mp3', pad4: 'sounds/synth_lead.mp3',
+            pad1: 'sounds/synth 1.wav', pad2: 'sounds/synth 2.wav',
+            pad3: 'sounds/synth 3.wav', pad4: 'sounds/synth 4.wav',
+            pad5: 'sounds/synth 5.wav', pad6: 'sounds/synth 6.wav',
+            pad7: 'sounds/synth 7.wav', pad8: 'sounds/synth 8.wav',
+            pad9: 'sounds/synth 9.wav', pad10: 'sounds/synth 10.wav',
+            pad11: 'sounds/synth 10.wav', pad12: 'sounds/synth 12.wav',
+            pad13: 'sounds/synth 11.wav', pad14: 'sounds/synth 14.wav',
+            pad15: 'sounds/synth 12.wav', pad16: 'sounds/synth 16.wav',
         },
         'FX': {
             pad1: 'sounds/carti_SCHYEAH.mp3', pad2: 'sounds/carti_hahahah.mp3',
