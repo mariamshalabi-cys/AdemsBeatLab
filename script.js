@@ -45,8 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'FX': {
             pad1: 'sounds/carti_SCHYEAH.mp3', pad2: 'sounds/carti_hahahah.mp3',
             pad3: 'sounds/carti_what.mp3', pad4: 'sounds/barbie.mp3',
-            pad5: 'sounds/engine_rev.mp3', pad6: 'sounds/tire_chirp.mp3',
-            pad7: 'sounds/clown_horn.mp3',
+            pad5: 'sounds/fx 5.wav', pad6: 'sounds/fx 6.wav',
+            pad7: 'sounds/fx 7.wav', pad8: 'sounds/fx 8.wav',
+            pad9: 'sounds/fx 9.wav', pad10: 'sounds/fx 10.wav',
+            pad11: 'sounds/fx 11.wav', pad12: 'sounds/fx 12.wav',
+            pad13: 'sounds/fx 13.wav', pad14: 'sounds/fx 14.wav',
+            pad15: 'sounds/fx 15.wav', pad16: 'sounds/fx 16.wav'
         }
     };
 
