@@ -23,8 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
             pad15: 'sounds/CKV1_Snare Rimshot.wav', pad16: 'sounds/CKV1_Snare Soft.wav',
         },
         'Bass': {
-            pad1: 'sounds/synth_chord.mp3', pad2: 'sounds/synth_arpeggio.mp3',
-            pad3: 'sounds/bass_note_A.mp3', pad4: 'sounds/bass_note_G.mp3',
+            pad1: 'sounds/bass 1.wav', pad2: 'sounds/bass 2.wav',
+            pad3: 'sounds/bass 3.wav', pad4: 'sounds/bass 4.wav',
+            pad5: 'sounds/bass 5.wav', pad6: 'sounds/bass 6.wav',
+            pad7: 'sounds/bass 7.wav', pad8: 'sounds/bass 8.wav',
+            pad9: 'sounds/bass 9.wav', pad10: 'sounds/bass 10.wav',
+            pad11: 'sounds/bass 11.wav', pad12: 'sounds/bass 12.wav',
+            pad13: 'sounds/bass 13.wav', pad14: 'sounds/bass 14.wav',
+            pad15: 'sounds/bass 15.wav', pad16: 'sounds/bass 16.wav',
         },
         'Synth': {
             pad1: 'sounds/synth_chord.mp3', pad2: 'sounds/synth_arpeggio.mp3',
